@@ -35,4 +35,29 @@ public class PathUtil
 
         return path.Trim().Replace("\\","/");
     }
+
+    public static string UIPath(string name)
+    {
+        return $"Assets/BuildResources/UI/Prefab/{name}.prefab";
+    }
+    public static string LuaPath(string name)
+    {
+        return $"Assets/BuildResources/LuaScripts/{name}.bytes";
+    }
+    public static string SoundPath(string name)
+    {
+        return $"Assets/BuildResources/Audio/Sound/{name}";
+    }
+    public static string MusicPath(string name)
+    {
+        return $"Assets/BuildResources/Audio/Music/{name}";
+    }
+    public static string ScenePath(string name)
+    {
+        return $"Assets/BuildResources/Scene/{name}.unity";
+    }
+    public static string SpritePath(string name)
+    {
+        return $"Assets/BuildResources/Sprites/{name}";
+    }
 }

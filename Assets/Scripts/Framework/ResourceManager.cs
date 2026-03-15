@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
+
+using UnityObject = UnityEngine.Object;
 
 public class ResourceManager : MonoBehaviour
 {
@@ -43,26 +44,46 @@ public class ResourceManager : MonoBehaviour
             _BundleInfos.Add(bundleInfo.AssetName,bundleInfo);
         }
     }
+#if UNITY_EDITOR
+    // 编辑器调用资源加载入口
+    void EditorLoadAsset(string assetName, Action<UnityObject> callback)
+    {
+        Debug.Log("编辑器资源加载");
+        UnityObject obj = UnityEditor.AssetDatabase.LoadAssetAtPath(assetName, typeof(UnityObject));
+        if(obj == null)
+        {
+            Debug.LogError($"未找到资源，资源名称：{assetName}");
+            return;
+        }
+        callback?.Invoke(obj);
+    }
+#endif
     /// <summary>
-    /// 资源加载入口
+    /// 统一资源加载入口
     /// </summary>
     /// <param name="assetName"></param>
     /// <param name="callback"></param>
-    public void LoadAsset(string assetName, Action<UnityEngine.Object> callback)
+    private void LoadAsset(string assetName, Action<UnityObject> callback)
     {
+        if(AppConst.GameMode == GameLoadMode.Editor)
+        {
+            #if UNITY_EDITOR
+            EditorLoadAsset(assetName, callback);
+            #endif
+            return;
+        }
         StartCoroutine(LoadBundleAsync(assetName, callback));
     }
-
-    IEnumerator LoadBundleAsync(string assetName, Action<UnityEngine.Object> callback = null)
+    IEnumerator LoadBundleAsync(string assetName, Action<UnityObject> callback = null)
     {
         string bundleName = _BundleInfos[assetName].BundleName;
         string bundlePath = $"{PathUtil.BundleResourcePath}/{bundleName}";
 
         List<string> currentDependencies = _BundleInfos[assetName].Dependencies;
 
-        if(currentDependencies != null && currentDependencies.Count > 0)
+        if (currentDependencies != null && currentDependencies.Count > 0)
         {
-            foreach(var dependency in currentDependencies)
+            foreach (var dependency in currentDependencies)
             {
                 yield return LoadBundleAsync(dependency);
             }
@@ -77,13 +98,23 @@ public class ResourceManager : MonoBehaviour
         callback?.Invoke(bundleRequest?.asset);
 
     }
+
+    private void LoadUI(string assetName, Action<UnityObject> callback = null)
+    {
+        LoadAsset(PathUtil.UIPath(assetName), callback);
+    }
+    private void LoadLua(string assetName, Action<UnityObject> callback = null)
+    {
+        LoadAsset(PathUtil.LuaPath(assetName), callback);
+    }
+
     private void Start()
     {
         ParseFileText();
-        LoadAsset("Assets/BuildResources/UI/Prefab/UITest.prefab", OnComplete);
+        LoadUI("UITest", OnComplete);
     }
 
-    private void OnComplete(UnityEngine.Object obj)
+    private void OnComplete(UnityObject obj)
     {
         GameObject go = Instantiate(obj) as GameObject;
         
