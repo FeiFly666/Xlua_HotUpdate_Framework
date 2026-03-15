@@ -1,13 +1,18 @@
 ManifestFileVersion: 0
-CRC: 1999410239
+CRC: 1175457331
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
+      Name: ui/prefab/uitest.prefab.ab
+      Dependencies:
+        Dependency_0: ui/res/login/bg.jpg.ab
+        Dependency_1: ui/res/login/bigredbutton_regular.png.ab
+    Info_1:
       Name: ui/res/login/bg.jpg.ab
       Dependencies: {}
-    Info_1:
+    Info_2:
       Name: ui/res/login/bigredbutton_regular.png.ab
       Dependencies: {}
-    Info_2:
+    Info_3:
       Name: ui/res/login/tinyroundredbutton.png.ab
       Dependencies: {}

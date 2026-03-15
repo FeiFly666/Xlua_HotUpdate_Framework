@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 using Unity.VisualScripting;
+using System.Xml;
+using System.Linq;
 public class BuildTool : Editor
 {
     [MenuItem("Tools/Build Windows AssetBundle")]
@@ -26,6 +28,7 @@ public class BuildTool : Editor
     static void Build(BuildTarget targetPlatform)
     {
         List<AssetBundleBuild> assetBundleBuilds = new List<AssetBundleBuild>();
+        List<string> bundleInfos = new List<string>();
 
         string[] files = Directory.GetFiles(PathUtil.BuildResourcesPath, "*", SearchOption.AllDirectories);
         foreach (string file in files)
@@ -38,23 +41,60 @@ public class BuildTool : Editor
             string standardFilePath = PathUtil.GetStandardPath(file);
             
             string assetName = PathUtil.GetUnityPath(standardFilePath);
-            string bundleName = file.Replace(PathUtil.BuildResourcesPath,"").ToLower();
+            string bundleName = standardFilePath.Replace(PathUtil.BuildResourcesPath,"").ToLower();
 
 
             assetBundle.assetNames = new string[] { assetName };
-            assetBundle.assetBundleName = $"{bundleName}.ab";
+            assetBundle.assetBundleName = $"{bundleName}{AppConst.BundleExtension}";
 
             assetBundleBuilds.Add(assetBundle);
+
+            //生成Bundle信息： 资源名称|Bundle名称|依赖资源列表
+            List<string> bundleDependencies = GetAllDependencies(assetName);
+            string bundleInfo = $"{assetName}|{assetBundle.assetBundleName}";
+
+            if(bundleDependencies.Count > 0)
+            {
+                bundleInfo = bundleInfo + "|" + string.Join("|",bundleDependencies) ;
+            }
+
+            bundleInfos.Add(bundleInfo);
         }
-        
+
+
         if(Directory.Exists(PathUtil.BundleBuildOutPath))
         {
             Directory.Delete(PathUtil.BundleBuildOutPath, true);
         }
         Directory.CreateDirectory(PathUtil.BundleBuildOutPath);
+        File.WriteAllLines($"{PathUtil.BundleBuildOutPath}/{AppConst.FileListName}", bundleInfos);
 
         BuildPipeline.BuildAssetBundles(PathUtil.BundleBuildOutPath, assetBundleBuilds.ToArray(), BuildAssetBundleOptions.None, targetPlatform);
 
+        AssetDatabase.Refresh();
 
+    }
+
+    /// <summary>
+    /// 获取所有依赖文件，返回列表
+    /// </summary>
+    /// <param name="currentFile"></param>
+    /// <returns></returns>
+    static List<string> GetAllDependencies(string currentFile)
+    {
+        List<string> dependencies = new List<string>();
+
+        string[] files = AssetDatabase.GetDependencies(currentFile);
+
+        for (int i = 0; i < files.Length; i++)
+        {
+            string file = files[i];
+
+            if (!file.EndsWith(".cs")&& !file.Equals(currentFile))
+            {
+                dependencies.Add(PathUtil.GetStandardPath(file));
+            }
+        }
+        return dependencies;
     }
 }

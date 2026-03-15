@@ -10,6 +10,11 @@ public class PathUtil
     public static readonly string BuildResourcesPath = AssetPath + "/BuildResources/";
     //AB包输出目录
     public static readonly string BundleBuildOutPath = Application.streamingAssetsPath;
+    //版本文件读取路径
+    public static string BundleResourcePath
+    {
+        get { return Application.streamingAssetsPath; }
+    }
 
     /// <summary>
     /// 获取Unity资源相对路径
