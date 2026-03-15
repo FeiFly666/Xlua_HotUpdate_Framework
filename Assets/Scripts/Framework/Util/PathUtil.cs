@@ -10,10 +10,21 @@ public class PathUtil
     public static readonly string BuildResourcesPath = AssetPath + "/BuildResources/";
     //AB包输出目录
     public static readonly string BundleBuildOutPath = Application.streamingAssetsPath;
+    //只读目录
+    public static readonly string ReadPath = Application.streamingAssetsPath;
+    //可读写目录
+    public static readonly string WritablePath = Application.persistentDataPath;
     //版本文件读取路径
     public static string BundleResourcePath
     {
-        get { return Application.streamingAssetsPath; }
+        get 
+        { 
+            if(AppConst.GameMode == GameLoadMode.Update)
+            {
+                return WritablePath;
+            }
+            return ReadPath; 
+        }
     }
 
     /// <summary>

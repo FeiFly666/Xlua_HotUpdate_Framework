@@ -9,5 +9,6 @@ public class GameStart : MonoBehaviour
     void Awake()
     {
         AppConst.GameMode = gameMode; 
+        DontDestroyOnLoad(this.gameObject);
     }
 }

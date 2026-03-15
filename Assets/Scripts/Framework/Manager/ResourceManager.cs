@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
     /// <summary>
     /// 解析版本文件信息
     /// </summary>
-   private void ParseFileText()
+   public void ParseFileText()
     {
         string url = $"{PathUtil.BundleResourcePath}/{AppConst.FileListName}";
 
@@ -99,27 +99,13 @@ public class ResourceManager : MonoBehaviour
 
     }
 
-    private void LoadUI(string assetName, Action<UnityObject> callback = null)
+    public void LoadUI(string assetName, Action<UnityObject> callback = null)
     {
         LoadAsset(PathUtil.UIPath(assetName), callback);
     }
-    private void LoadLua(string assetName, Action<UnityObject> callback = null)
+    public void LoadLua(string assetName, Action<UnityObject> callback = null)
     {
         LoadAsset(PathUtil.LuaPath(assetName), callback);
     }
 
-    private void Start()
-    {
-        ParseFileText();
-        LoadUI("UITest", OnComplete);
-    }
-
-    private void OnComplete(UnityObject obj)
-    {
-        GameObject go = Instantiate(obj) as GameObject;
-        
-        go.transform.SetParent(this.transform);
-        go.SetActive(true);
-        go.transform.localPosition = Vector3.zero;
-    }
 }
