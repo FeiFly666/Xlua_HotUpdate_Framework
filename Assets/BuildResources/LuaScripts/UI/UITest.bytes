@@ -1,0 +1,12 @@
+function Awake()
+    print("lua awake");
+end
+function OnOpen()
+    print("lua open");
+end
+function OnClose()
+    print("lua close");
+end
+function Update()
+    print("lua update");
+end

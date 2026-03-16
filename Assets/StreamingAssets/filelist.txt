@@ -1,3 +1,5 @@
+Assets/BuildResources/LuaScripts/test.bytes|luascripts/test.bytes.ab
+Assets/BuildResources/LuaScripts/UI/UITest.bytes|luascripts/ui/uitest.bytes.ab
 Assets/BuildResources/UI/Prefab/UITest.prefab|ui/prefab/uitest.prefab.ab|Assets/BuildResources/UI/Res/Login/BigRedButton_Regular.png|Assets/BuildResources/UI/Res/Login/bg.jpg
 Assets/BuildResources/UI/Res/Login/bg.jpg|ui/res/login/bg.jpg.ab
 Assets/BuildResources/UI/Res/Login/BigRedButton_Regular.png|ui/res/login/bigredbutton_regular.png.ab

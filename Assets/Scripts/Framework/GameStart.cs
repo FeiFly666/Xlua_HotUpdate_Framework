@@ -10,5 +10,18 @@ public class GameStart : MonoBehaviour
     {
         AppConst.GameMode = gameMode; 
         DontDestroyOnLoad(this.gameObject);
+
+    }
+    private void Start()
+    {
+        Manager.Resource.ParseFileText();
+        Manager.Lua.InitLua(Test);
+    }
+    private void Test()
+    {
+        Manager.Lua.StartLuaLoad("test");
+
+        XLua.LuaFunction func = Manager.Lua.luaEnv.Global.Get<XLua.LuaFunction>("Main");
+        func?.Call();
     }
 }

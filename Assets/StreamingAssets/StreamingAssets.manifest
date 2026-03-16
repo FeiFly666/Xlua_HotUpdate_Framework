@@ -1,0 +1,24 @@
+ManifestFileVersion: 0
+CRC: 1590873606
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: luascripts/test.bytes.ab
+      Dependencies: {}
+    Info_1:
+      Name: luascripts/ui/uitest.bytes.ab
+      Dependencies: {}
+    Info_2:
+      Name: ui/prefab/uitest.prefab.ab
+      Dependencies:
+        Dependency_0: ui/res/login/bg.jpg.ab
+        Dependency_1: ui/res/login/bigredbutton_regular.png.ab
+    Info_3:
+      Name: ui/res/login/bg.jpg.ab
+      Dependencies: {}
+    Info_4:
+      Name: ui/res/login/bigredbutton_regular.png.ab
+      Dependencies: {}
+    Info_5:
+      Name: ui/res/login/tinyroundredbutton.png.ab
+      Dependencies: {}

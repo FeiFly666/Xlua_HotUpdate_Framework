@@ -41,7 +41,14 @@ public class ResourceManager : MonoBehaviour
                 bundleInfo.Dependencies.Add(splitInfos[j]);
             }
 
-            _BundleInfos.Add(bundleInfo.AssetName,bundleInfo);
+            if(!_BundleInfos.ContainsKey(bundleInfo.AssetName))
+                _BundleInfos.Add(bundleInfo.AssetName,bundleInfo);
+
+            if (splitInfos[0].IndexOf("LuaScripts")>0)
+            {
+                if (!Manager.Lua.LuaNames.Contains(splitInfos[0]))
+                    Manager.Lua.LuaNames.Add(splitInfos[0]);
+            }
         }
     }
 #if UNITY_EDITOR
@@ -105,7 +112,7 @@ public class ResourceManager : MonoBehaviour
     }
     public void LoadLua(string assetName, Action<UnityObject> callback = null)
     {
-        LoadAsset(PathUtil.LuaPath(assetName), callback);
+        LoadAsset(assetName, callback);
     }
 
 }
