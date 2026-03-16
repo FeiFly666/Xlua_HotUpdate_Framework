@@ -1,0 +1,25 @@
+function Awake()
+    print("scene init");
+end
+
+function OnActive()
+    print("Scene OnActive");
+end
+
+function OnEnter()
+    print("Scene OnEnter Scene02");
+    Manager.Entity:ShowEntity(PathUtil.ModelPath("Player"),"Player", "Entity.PlayerEntity");
+end
+
+function Update()
+    print("Scene update")
+end
+
+function OnInActive()
+    print("Scene OnInActive");
+end
+
+function OnExit()
+    print("Scene OnExit");
+end
+--Main();

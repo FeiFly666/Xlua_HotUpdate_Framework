@@ -114,5 +114,13 @@ public class ResourceManager : MonoBehaviour
     {
         LoadAsset(assetName, callback);
     }
+    public void LoadPrefab(string assetName, Action<UnityObject> callback = null)
+    {
+        LoadAsset(assetName, callback);
+    }
+    public void LoadScene(string assetName, Action<UnityObject> callback = null)
+    {
+        LoadAsset(PathUtil.ScenePath(assetName), callback);
+    }
 
 }

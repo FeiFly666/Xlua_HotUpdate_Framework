@@ -73,4 +73,8 @@ public class PathUtil
     {
         return $"Assets/BuildResources/Sprites/{name}";
     }
+    public static string ModelPath(string name)
+    {
+        return $"Assets/BuildResources/Model/Prefabs/{name}.prefab";
+    }
 }

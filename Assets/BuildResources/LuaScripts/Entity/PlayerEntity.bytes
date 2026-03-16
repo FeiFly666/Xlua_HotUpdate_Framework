@@ -1,0 +1,24 @@
+function Awake()
+    print(" Entity init");
+end
+
+function OnShow()
+    print("Entity OnShow");
+    self.transform.localPosition = Vector3(0,1,0);
+end
+
+function Update()
+    print("Entity update")
+    if(Input.GetKey(KeyCode.W))then
+        self.transform:Translate(self.transform.forward * Time.deltaTime * 10);
+    end
+
+    if(Input.GetKey(KeyCode.S))then
+        self.transform:Translate(-self.transform.forward * Time.deltaTime * 10);
+    end
+end
+
+function OnHide()
+    print("Entity OnHide");
+
+end

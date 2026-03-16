@@ -222,10 +222,10 @@ public class HotUpdate : MonoBehaviour
     }
     private void Test()
     {
-        Manager.Lua.StartLuaLoad("test");
+/*        Manager.Lua.StartLuaLoad("test");
 
         XLua.LuaFunction func = Manager.Lua.luaEnv.Global.Get<XLua.LuaFunction>("Main");
-        func?.Call();
+        func?.Call();*/
     }
     private void OnComplete(UnityObject obj)
     {

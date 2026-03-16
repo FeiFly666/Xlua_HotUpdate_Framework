@@ -3,6 +3,7 @@ function Awake()
 end
 function OnOpen()
     print("lua open");
+    Manager.Scene:LoadScene("TestScene1","Scene.Scene01");
 end
 function OnClose()
     print("lua close");
