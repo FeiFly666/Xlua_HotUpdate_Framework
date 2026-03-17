@@ -21,7 +21,7 @@ namespace XLua.CSObjectWrap
         {
 			ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
 			System.Type type = typeof(UnityEngine.UI.Slider);
-			Utils.BeginObjectRegister(type, L, translator, 0, 13, 9, 9);
+			Utils.BeginObjectRegister(type, L, translator, 0, 14, 9, 9);
 			
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetValueWithoutNotify", _m_SetValueWithoutNotify);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "Rebuild", _m_Rebuild);
@@ -36,6 +36,7 @@ namespace XLua.CSObjectWrap
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "FindSelectableOnDown", _m_FindSelectableOnDown);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnInitializePotentialDrag", _m_OnInitializePotentialDrag);
 			Utils.RegisterFunc(L, Utils.METHOD_IDX, "SetDirection", _m_SetDirection);
+			Utils.RegisterFunc(L, Utils.METHOD_IDX, "OnValueChangedSet", _m_OnValueChangedSet);
 			
 			
 			Utils.RegisterFunc(L, Utils.GETTER_IDX, "fillRect", _g_get_fillRect);
@@ -436,6 +437,34 @@ namespace XLua.CSObjectWrap
                     bool _includeRectLayouts = LuaAPI.lua_toboolean(L, 3);
                     
                     gen_to_be_invoked.SetDirection( _direction, _includeRectLayouts );
+                    
+                    
+                    
+                    return 0;
+                }
+                
+            } catch(System.Exception gen_e) {
+                return LuaAPI.luaL_error(L, "c# exception:" + gen_e);
+            }
+            
+        }
+        
+        [MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+        static int _m_OnValueChangedSet(RealStatePtr L)
+        {
+		    try {
+            
+                ObjectTranslator translator = ObjectTranslatorPool.Instance.Find(L);
+            
+            
+                UnityEngine.UI.Slider gen_to_be_invoked = (UnityEngine.UI.Slider)translator.FastGetCSObj(L, 1);
+            
+            
+                
+                {
+                    object _callback = translator.GetObject(L, 2, typeof(object));
+                    
+                    gen_to_be_invoked.OnValueChangedSet( _callback );
                     
                     
                     

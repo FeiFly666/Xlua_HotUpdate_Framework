@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1394968776
+CRC: 2667381889
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -27,32 +27,35 @@ AssetBundleManifest:
       Name: luascripts/scene/scene02.bytes.ab
       Dependencies: {}
     Info_8:
-      Name: luascripts/ui/uitest.bytes.ab
+      Name: luascripts/ui/uilogin.bytes.ab
       Dependencies: {}
     Info_9:
-      Name: model/mats/testplayer.mat.ab
+      Name: luascripts/ui/uitest.bytes.ab
       Dependencies: {}
     Info_10:
+      Name: model/mats/testplayer.mat.ab
+      Dependencies: {}
+    Info_11:
       Name: model/prefabs/player.prefab.ab
       Dependencies:
         Dependency_0: model/mats/testplayer.mat.ab
-    Info_11:
-      Name: ui/prefab/uitest 1.prefab.ab
-      Dependencies:
-        Dependency_0: ui/res/login/bg.jpg.ab
-        Dependency_1: ui/res/login/bigredbutton_regular.png.ab
     Info_12:
+      Name: ui/prefab/uilogin.prefab.ab
+      Dependencies:
+        Dependency_0: ui/res/login/bigredbutton_regular.png.ab
+        Dependency_1: ui/res/login/tinyroundredbutton.png.ab
+    Info_13:
       Name: ui/prefab/uitest.prefab.ab
       Dependencies:
         Dependency_0: ui/res/login/bg.jpg.ab
         Dependency_1: ui/res/login/bigredbutton_regular.png.ab
         Dependency_2: ui/res/login/tinyroundredbutton.png.ab
-    Info_13:
+    Info_14:
       Name: ui/res/login/bg.jpg.ab
       Dependencies: {}
-    Info_14:
+    Info_15:
       Name: ui/res/login/bigredbutton_regular.png.ab
       Dependencies: {}
-    Info_15:
+    Info_16:
       Name: ui/res/login/tinyroundredbutton.png.ab
       Dependencies: {}

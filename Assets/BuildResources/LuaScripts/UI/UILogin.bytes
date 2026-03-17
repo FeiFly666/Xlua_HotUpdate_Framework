@@ -42,7 +42,7 @@ function OnOpen()
     )
     Btn_PoolTest:OnClickSet(
         function ()
-             Manager.UI:OpenUI("UILogin","UI","UI.UILogin");
+             Manager.UI:OpenUI("UITest","UI","UI.UITest");
         end
     )
     Btn_Close:OnClickSet(

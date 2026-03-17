@@ -14,10 +14,21 @@ public class ResourceManager : MonoBehaviour
         public string BundleName;
         public List<string> Dependencies;
     }
+    internal class BundleData
+    {
+        public AssetBundle assetBundle;
+        public int Count;
+
+        public BundleData(AssetBundle assetBundle)
+        {
+            this.assetBundle = assetBundle;
+            this.Count = 1;
+        }
+    }
 
     private Dictionary<string,BundleInfo> _BundleInfos = new Dictionary<string,BundleInfo>();
 
-    private Dictionary<string,AssetBundle> _AssetBundles = new Dictionary<string,AssetBundle>();
+    private Dictionary<string, BundleData> _AssetBundles = new Dictionary<string,BundleData>();
 
     /// <summary>
     /// 解析版本文件信息
@@ -83,12 +94,13 @@ public class ResourceManager : MonoBehaviour
         }
         StartCoroutine(LoadBundleAsync(assetName, callback));
     }
-    private AssetBundle GetAssetBundle(string bundleName)
+    private BundleData GetAssetBundle(string bundleName)
     {
-        AssetBundle bundle = null;
+        BundleData bundle = null;
         if(_AssetBundles.ContainsKey(bundleName))
         {
             bundle = _AssetBundles[bundleName];
+            bundle.Count++;
         }
         return bundle;
     }
@@ -96,35 +108,48 @@ public class ResourceManager : MonoBehaviour
     {
         string bundleName = _BundleInfos[assetName].BundleName;
         string bundlePath = $"{PathUtil.BundleResourcePath}/{bundleName}";
+        List<string> currentDependencies = _BundleInfos[assetName].Dependencies;
 
-        AssetBundle bundle = GetAssetBundle(bundleName);
+        BundleData bundle = GetAssetBundle(bundleName);
         if (bundle == null)
         {
-            List<string> currentDependencies = _BundleInfos[assetName].Dependencies;
-
-            if (currentDependencies != null && currentDependencies.Count > 0)
+            UnityObject obj = Manager.Pool.Spawn("AssetBundle", bundleName);
+            if(obj != null)
             {
-                foreach (var dependency in currentDependencies)
-                {
-                    yield return LoadBundleAsync(dependency);
-                }
+                AssetBundle b = obj as AssetBundle;
+                bundle = new BundleData(b);
             }
+            else
+            {
+                AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
+                yield return request;
 
-            AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
-            yield return request;
-
-            bundle = request.assetBundle;
+                bundle = new BundleData(request.assetBundle);
+            }
 
             _AssetBundles.Add(bundleName, bundle);
+        }
 
-            if (assetName.EndsWith(".unity"))
+        if (currentDependencies != null && currentDependencies.Count > 0)
+        {
+            foreach (var dependency in currentDependencies)
             {
-                callback?.Invoke(null);
-                yield break;
+                yield return LoadBundleAsync(dependency);
             }
         }
-       
-        AssetBundleRequest bundleRequest = bundle.LoadAssetAsync(assetName);
+
+        if (assetName.EndsWith(".unity"))
+        {
+            callback?.Invoke(null);
+            yield break;
+        }
+
+        if(callback == null)//依赖资源不需要加载具体资源以及回调
+        {
+            yield break;
+        }
+
+        AssetBundleRequest bundleRequest = bundle.assetBundle.LoadAssetAsync(assetName);
         yield return bundleRequest;
 
         callback?.Invoke(bundleRequest?.asset);
@@ -155,5 +180,46 @@ public class ResourceManager : MonoBehaviour
     {
         LoadAsset(PathUtil.SoundPath(assetName), callback);
     }
+    //减去bundle及其依赖的计数
+    public void DecreaseAllBundleCount(string assetName)
+    {
+        string bundleName = _BundleInfos[assetName].BundleName;
+        List<string> currentDependencies = _BundleInfos[assetName].Dependencies;
 
+        DecreaseBundleCount(assetName);
+
+        if(currentDependencies != null)
+        {
+            foreach(var dependency in currentDependencies)
+            {
+                string name = _BundleInfos[dependency].BundleName;
+                DecreaseBundleCount(name);
+            }
+        }
+
+    }
+
+    public void DecreaseBundleCount(string bundleName)
+    {
+        if(_AssetBundles.TryGetValue(bundleName, out var bundle))
+        {
+            if(bundle.Count > 0)
+            {
+                bundle.Count--;
+                Debug.Log($"Bundle: {bundleName} 计数减一 count:{bundle.Count}");
+            }
+            if(bundle.Count <= 0)
+            {
+                Debug.Log($"Bundle: {bundleName} 移入对象池，长时间不再使用将销毁");
+                Manager.Pool.UnSpawn("AssetBundle", bundleName, bundle.assetBundle);
+                _AssetBundles.Remove(bundleName);
+            }
+        }
+    }
+
+    public void UnloadBundle(UnityObject obj)
+    {
+        AssetBundle ab = obj as AssetBundle;
+        ab.Unload(true);
+    }
 }

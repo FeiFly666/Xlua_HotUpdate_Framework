@@ -14,7 +14,6 @@ public class LuaManager : MonoBehaviour
 
     private Dictionary<string, byte[]> _LuaScripts;
 
-    Action OnInitFinished;
     //Lua虚拟机，全局唯一
     public LuaEnv luaEnv;
 
@@ -23,9 +22,8 @@ public class LuaManager : MonoBehaviour
         luaEnv = new LuaEnv();
         luaEnv.AddLoader(LuaLoader);
     }
-    public void InitLua(Action initFinished)
+    public void InitLua()
     {
-        OnInitFinished += initFinished;
         _LuaScripts = new Dictionary<string, byte[]>();
         if (AppConst.GameMode != GameLoadMode.Editor)
         {
@@ -68,7 +66,7 @@ public class LuaManager : MonoBehaviour
 
                 if(_LuaScripts.Count >= LuaNames.Count)
                 {
-                    OnInitFinished?.Invoke();
+                    Manager.Event.Execute(1);
                     LuaNames.Clear();
                     LuaNames = null;
 
@@ -99,7 +97,7 @@ public class LuaManager : MonoBehaviour
 
             AddLuaScript(PathUtil.GetUnityPath(fileName), script);
         }
-        OnInitFinished?.Invoke();
+        Manager.Event.Execute(1);
     }
     
 #endif

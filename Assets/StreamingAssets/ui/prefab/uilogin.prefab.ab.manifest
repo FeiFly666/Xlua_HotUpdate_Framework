@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 3555266555
+CRC: 596619785
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 31faf8926d9b7b1eed3dcb1008b45ab1
+    Hash: e102ada37b69da2d273d4af0b90848f2
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 3a5fbaab1e180b1b4ae5003eea655cae
+    Hash: 11cf61b9953da6f64d5d799298fe7789
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 31faf8926d9b7b1eed3dcb1008b45ab1
+    Hash: e102ada37b69da2d273d4af0b90848f2
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -24,6 +24,8 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
 - Class: 115
@@ -52,9 +54,11 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.Navigation
 - AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.Slider/SliderEvent
+- AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.SpriteState
 Assets:
-- Assets/BuildResources/UI/Prefab/UITest 1.prefab
+- Assets/BuildResources/UI/Prefab/UILogin.prefab
 Dependencies:
-- D:/unity/xiangmu/HotUpdate/Assets/StreamingAssets/ui/res/login/bg.jpg.ab
 - D:/unity/xiangmu/HotUpdate/Assets/StreamingAssets/ui/res/login/bigredbutton_regular.png.ab
+- D:/unity/xiangmu/HotUpdate/Assets/StreamingAssets/ui/res/login/tinyroundredbutton.png.ab

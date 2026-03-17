@@ -218,14 +218,6 @@ public class HotUpdate : MonoBehaviour
     {
         Manager.Resource.ParseFileText();
         Manager.Resource.LoadUI("UITest", OnComplete);
-        Manager.Lua.InitLua(Test);
-    }
-    private void Test()
-    {
-/*        Manager.Lua.StartLuaLoad("test");
-
-        XLua.LuaFunction func = Manager.Lua.luaEnv.Global.Get<XLua.LuaFunction>("Main");
-        func?.Call();*/
     }
     private void OnComplete(UnityObject obj)
     { 

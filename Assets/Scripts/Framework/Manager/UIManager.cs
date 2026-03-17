@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    //»º´æUI×Öµä
-    Dictionary<string, GameObject> _UI = new Dictionary<string, GameObject>();
-
     Dictionary<string, Transform> _UIGroup = new Dictionary<string, Transform>();
 
     private Transform _UIParent;
@@ -38,22 +35,30 @@ public class UIManager : MonoBehaviour
     public void OpenUI(string uiName, string groupName,string luaName)
     {
         GameObject ui = null;
-        if(_UI.TryGetValue( uiName, out ui))
+        Transform group = GetUIGroup(groupName);
+
+        string uiPath = PathUtil.UIPath(uiName);
+        Object uiObj = Manager.Pool.Spawn("UI", uiPath);
+
+        if(uiObj != null)
         {
-            UILogic uiLogic = ui.GetComponent<UILogic>();
-            uiLogic.OnOpen();
+            ui = uiObj as GameObject;
+
+            ui.transform.SetParent(group, false);
+
+            UILogic logic = ui.GetComponent<UILogic>();
+            logic.OnOpen();
             return;
         }
+
         Manager.Resource.LoadUI(uiName, (Object obj) =>
         {
             ui = Instantiate(obj) as GameObject;
-            _UI.Add(uiName, ui);
-
-            Transform group = GetUIGroup(groupName);
 
             ui.transform.SetParent(group, false);
 
             UILogic uiLogic = ui.AddComponent<UILogic>();
+            uiLogic.assetName = uiPath;
             uiLogic.Init(luaName);
             uiLogic.OnOpen();
         });
