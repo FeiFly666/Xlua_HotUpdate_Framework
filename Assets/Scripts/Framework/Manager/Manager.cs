@@ -13,6 +13,7 @@ public class Manager : MonoBehaviour
     private static SoundManager _sound;
     private static PoolManager _pool;
     private static EventManager _event;
+    private static NetManager _net;
     public static ResourceManager Resource
     {
         get { return _resource; }
@@ -46,6 +47,10 @@ public class Manager : MonoBehaviour
     {
         get { return _event; }
     }
+    public static NetManager Net
+    {
+        get { return _net; }
+    }
     private void Awake()
     {
         _lua = this.AddComponent<LuaManager>();
@@ -56,6 +61,7 @@ public class Manager : MonoBehaviour
         _sound = this.AddComponent<SoundManager>();
         _pool = this.AddComponent<PoolManager>();
         _event = this.AddComponent<EventManager>();
+        _net = this.AddComponent<NetManager>();
     }
 
 }

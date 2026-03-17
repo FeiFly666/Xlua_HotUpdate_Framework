@@ -42,7 +42,8 @@ function OnOpen()
     )
     Btn_PoolTest:OnClickSet(
         function ()
-             Manager.UI:OpenUI("UILogin","UI","UI.UILogin");
+             --Manager.UI:OpenUI("UILogin","UI","UI.UILogin");
+             msg_mgr.get_msg("msg_test"):req_first_test(1111, "feiFly", "123456789", {1,2,3,4,5,6,7,8,9});
         end
     )
     Btn_Close:OnClickSet(

@@ -5,6 +5,15 @@ Input = CS.UnityEngine.Input;
 KeyCode = CS.UnityEngine.KeyCode;
 Time = CS.UnityEngine.Time;
 
+AppConst = CS.AppConst;
+
+Log = require("log");
+Json = require("rapidjson");
+require("class");
+
+base_msg = require("Message.base_msg");
+msg_mgr = require("Message.msg_mgr");
+
 local ui_group =
 {
     "Static",
@@ -20,14 +29,13 @@ local entity_group =
 Manager.UI:SetUIGroup(ui_group);
 Manager.Entity:SetEntityGroup(entity_group);
 function Main()
+    msg_mgr.init();
+
+    Manager.Net:Init();
+
+    Manager.Net:ConnectedToServer("127.0.0.1", 8000);
     --print("Hello World!");
-    --Manager.UI:OpenUI("UITest","UI","UI.UITest");
+    Manager.UI:OpenUI("UITest","UI","UI.UITest");
     --Manager.UI:OpenUI("UITest 1","Static","UI.UITest");
     --Manager.Scene:LoadScene("TestScene1","Scene.Scene01");
-    local rapidjson = require('rapidjson')
-    local t = rapidjson.decode('{"a":123}')
-    print(t.a)
-    t.a = 456
-    local s = rapidjson.encode(t)
-    print('json', s)
 end
