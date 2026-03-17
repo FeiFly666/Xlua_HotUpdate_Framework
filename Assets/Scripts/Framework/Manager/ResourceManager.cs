@@ -17,6 +17,8 @@ public class ResourceManager : MonoBehaviour
 
     private Dictionary<string,BundleInfo> _BundleInfos = new Dictionary<string,BundleInfo>();
 
+    private Dictionary<string,AssetBundle> _AssetBundles = new Dictionary<string,AssetBundle>();
+
     /// <summary>
     /// 解析版本文件信息
     /// </summary>
@@ -81,25 +83,48 @@ public class ResourceManager : MonoBehaviour
         }
         StartCoroutine(LoadBundleAsync(assetName, callback));
     }
+    private AssetBundle GetAssetBundle(string bundleName)
+    {
+        AssetBundle bundle = null;
+        if(_AssetBundles.ContainsKey(bundleName))
+        {
+            bundle = _AssetBundles[bundleName];
+        }
+        return bundle;
+    }
     IEnumerator LoadBundleAsync(string assetName, Action<UnityObject> callback = null)
     {
         string bundleName = _BundleInfos[assetName].BundleName;
         string bundlePath = $"{PathUtil.BundleResourcePath}/{bundleName}";
 
-        List<string> currentDependencies = _BundleInfos[assetName].Dependencies;
-
-        if (currentDependencies != null && currentDependencies.Count > 0)
+        AssetBundle bundle = GetAssetBundle(bundleName);
+        if (bundle == null)
         {
-            foreach (var dependency in currentDependencies)
+            List<string> currentDependencies = _BundleInfos[assetName].Dependencies;
+
+            if (currentDependencies != null && currentDependencies.Count > 0)
             {
-                yield return LoadBundleAsync(dependency);
+                foreach (var dependency in currentDependencies)
+                {
+                    yield return LoadBundleAsync(dependency);
+                }
+            }
+
+            AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
+            yield return request;
+
+            bundle = request.assetBundle;
+
+            _AssetBundles.Add(bundleName, bundle);
+
+            if (assetName.EndsWith(".unity"))
+            {
+                callback?.Invoke(null);
+                yield break;
             }
         }
-
-        AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(bundlePath);
-        yield return request;
-
-        AssetBundleRequest bundleRequest = request.assetBundle.LoadAssetAsync(assetName);
+       
+        AssetBundleRequest bundleRequest = bundle.LoadAssetAsync(assetName);
         yield return bundleRequest;
 
         callback?.Invoke(bundleRequest?.asset);
@@ -121,6 +146,14 @@ public class ResourceManager : MonoBehaviour
     public void LoadScene(string assetName, Action<UnityObject> callback = null)
     {
         LoadAsset(PathUtil.ScenePath(assetName), callback);
+    }
+    public void LoadMusic(string assetName, Action<UnityObject> callback = null)
+    {
+        LoadAsset(PathUtil.MusicPath(assetName), callback);
+    }
+    public void LoadSound(string assetName, Action<UnityObject> callback = null)
+    {
+        LoadAsset(PathUtil.SoundPath(assetName), callback);
     }
 
 }

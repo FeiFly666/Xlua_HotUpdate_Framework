@@ -11,10 +11,26 @@ using System;
 using XLua;
 using System.Reflection;
 using System.Linq;
+using UnityEngine.UI;
+using UnityEngine;
 
 //配置的详细介绍请看Doc下《XLua的配置.doc》
 public static class ExampleConfig
 {
+    [CSharpCallLua]
+    public static List<Type> MyCsharpCallLuaList = new List<Type>()
+    {
+        typeof(UnityEngine.Events.UnityAction<float>)
+    };
+
+    [LuaCallCSharp]
+    public static List<Type> MyLuaCallCSharpList = new List<Type>()
+    {
+        typeof(Component),
+        typeof(Button),
+        typeof(Slider),
+    };
+
     /***************如果你全lua编程，可以参考这份自动化配置***************/
     //--------------begin 纯lua编程配置参考----------------------------
     //static List<string> exclude = new List<string> {

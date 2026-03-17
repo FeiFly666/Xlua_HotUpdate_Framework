@@ -10,7 +10,7 @@ public class Manager : MonoBehaviour
     private static UIManager _ui;
     private static EntityManager _entity;
     private static MySceneManager _scene;
-
+    private static SoundManager _sound;
     public static ResourceManager Resource
     {
         get { return _resource; }
@@ -31,6 +31,10 @@ public class Manager : MonoBehaviour
     {
         get { return _scene; }
     }
+    public static SoundManager Sound
+    {
+        get { return _sound; }
+    }
     private void Awake()
     {
         _lua = this.AddComponent<LuaManager>();
@@ -38,6 +42,7 @@ public class Manager : MonoBehaviour
         _ui = this.AddComponent<UIManager>();
         _entity = this.AddComponent<EntityManager>();
         _scene = this.AddComponent<MySceneManager>();
+        _sound = this.AddComponent<SoundManager>();
     }
 
 }

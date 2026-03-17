@@ -228,7 +228,7 @@ public class HotUpdate : MonoBehaviour
         func?.Call();*/
     }
     private void OnComplete(UnityObject obj)
-    {
+    { 
         GameObject go = Instantiate(obj) as GameObject;
 
         go.transform.SetParent(this.transform);

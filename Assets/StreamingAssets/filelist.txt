@@ -1,6 +1,16 @@
 Assets/BuildResources/LuaScripts/test.bytes|luascripts/test.bytes.ab
+Assets/BuildResources/Scene/TestScene1.unity|scene/testscene1.unity.ab
+Assets/BuildResources/Scene/TestScene2.unity|scene/testscene2.unity.ab
+Assets/BuildResources/Audio/Music/dayu.mp3|audio/music/dayu.mp3.ab
+Assets/BuildResources/Audio/Sound/ui_touch.wav|audio/sound/ui_touch.wav.ab
+Assets/BuildResources/LuaScripts/Entity/PlayerEntity.bytes|luascripts/entity/playerentity.bytes.ab
+Assets/BuildResources/LuaScripts/Scene/Scene01.bytes|luascripts/scene/scene01.bytes.ab
+Assets/BuildResources/LuaScripts/Scene/Scene02.bytes|luascripts/scene/scene02.bytes.ab
 Assets/BuildResources/LuaScripts/UI/UITest.bytes|luascripts/ui/uitest.bytes.ab
-Assets/BuildResources/UI/Prefab/UITest.prefab|ui/prefab/uitest.prefab.ab|Assets/BuildResources/UI/Res/Login/BigRedButton_Regular.png|Assets/BuildResources/UI/Res/Login/bg.jpg
+Assets/BuildResources/Model/Mats/TestPlayer.mat|model/mats/testplayer.mat.ab
+Assets/BuildResources/Model/Prefabs/Player.prefab|model/prefabs/player.prefab.ab|Assets/BuildResources/Model/Mats/TestPlayer.mat
+Assets/BuildResources/UI/Prefab/UITest 1.prefab|ui/prefab/uitest 1.prefab.ab|Assets/BuildResources/UI/Res/Login/BigRedButton_Regular.png|Assets/BuildResources/UI/Res/Login/bg.jpg
+Assets/BuildResources/UI/Prefab/UITest.prefab|ui/prefab/uitest.prefab.ab|Assets/BuildResources/UI/Res/Login/BigRedButton_Regular.png|Assets/BuildResources/UI/Res/Login/TinyRoundRedButton.png|Assets/BuildResources/UI/Res/Login/bg.jpg
 Assets/BuildResources/UI/Res/Login/bg.jpg|ui/res/login/bg.jpg.ab
 Assets/BuildResources/UI/Res/Login/BigRedButton_Regular.png|ui/res/login/bigredbutton_regular.png.ab
 Assets/BuildResources/UI/Res/Login/TinyRoundRedButton.png|ui/res/login/tinyroundredbutton.png.ab

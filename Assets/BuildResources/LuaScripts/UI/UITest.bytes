@@ -3,7 +3,55 @@ function Awake()
 end
 function OnOpen()
     print("lua open");
-    Manager.Scene:LoadScene("TestScene1","Scene.Scene01");
+     --Manager.Scene:LoadScene("TestScene1","Scene.Scene01");
+    local Btn_PlayMusic = self.transform:Find("Btn_PlayMusic"):GetComponent("Button");
+    local Btn_PauseMusic = self.transform:Find("Btn_PauseMusic"):GetComponent("Button");
+    local Btn_UnPauseMusic = self.transform:Find("Btn_UnPauseMusic"):GetComponent("Button");
+    local Btn_StopMusic = self.transform:Find("Btn_StopMusic"):GetComponent("Button");
+    local Btn_PlaySound = self.transform:Find("Btn_PlaySound"):GetComponent("Button");
+
+    local MusicVolume = self.transform:Find("MusicVolume"):GetComponent("Slider");
+    local SoundVolume = self.transform:Find("SoundVolume"):GetComponent("Slider");
+
+    Btn_PlayMusic.onClick:AddListener(
+        function ()
+            Manager.Sound:PlayMusic("dayu.mp3");
+        end
+    )
+    Btn_PauseMusic.onClick:AddListener(
+        function ()
+            Manager.Sound:PauseMusic();
+        end
+    )
+    Btn_UnPauseMusic.onClick:AddListener(
+        function ()
+            Manager.Sound:UnPauseMusic();
+        end
+    )
+    Btn_StopMusic.onClick:AddListener(
+        function ()
+            Manager.Sound:StopMusic();
+        end
+    )
+    Btn_PlaySound.onClick:AddListener(
+        function ()
+            Manager.Sound:PlaySound("ui_touch.wav");
+        end
+    )
+
+
+    MusicVolume.onValueChanged:AddListener(
+        function (volume)
+            Manager.Sound:SetMusicVolume(volume);
+        end
+    )
+    SoundVolume.onValueChanged:AddListener(
+        function (volume)
+            Manager.Sound:SetSoundVolume(volume);
+        end
+    )
+    MusicVolume.value = 1;
+    SoundVolume.value = 1;
 end
 function OnClose()
     print("lua close");
