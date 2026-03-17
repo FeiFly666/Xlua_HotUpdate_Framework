@@ -37,6 +37,15 @@ namespace XLua.LuaDLL
         const string LUADLL = "__Internal";
 #else
         const string LUADLL = "xlua";
+
+        [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int luaopen_rapidjson(System.IntPtr L);
+
+        [MonoPInvokeCallback(typeof(LuaDLL.lua_CSFunction))]
+        public static int LoadRapidJson(System.IntPtr L)
+        {
+            return luaopen_rapidjson(L);
+        }
 #endif
 
         [DllImport(LUADLL, CallingConvention = CallingConvention.Cdecl)]
