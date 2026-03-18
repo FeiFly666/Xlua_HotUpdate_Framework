@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 357695281
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: fa3d75663050fac82a6f9f3bfd7d9123
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: fa3d75663050fac82a6f9f3bfd7d9123
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/BuildResources/LuaScripts/class.bytes
+Dependencies: []

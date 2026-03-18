@@ -9,6 +9,11 @@ public enum GameLoadMode
     PackageBundle,
     Update
 }
+public enum GameEvent
+{
+    StartLua,
+    GameInit
+}
 public class AppConst
 {
     public const string BundleExtension = ".ab";
@@ -19,5 +24,5 @@ public class AppConst
     public static bool OpenLog = true;
 
     //热更地址
-    public const string ResourceUrl = "http://127.0.0.1:5500/AssetBundles";
+    public const string ResourceUrl = "http://175.163.9.205:5500/AssetBundles";
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameStart : MonoBehaviour
@@ -7,21 +8,31 @@ public class GameStart : MonoBehaviour
     public GameLoadMode gameMode;
     public bool OpenLog = true;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
+        Manager.Event.Subscribe((int)GameEvent.StartLua, StartLua);
+        Manager.Event.Subscribe((int)GameEvent.GameInit, GameInit);
         AppConst.GameMode = gameMode; 
         AppConst.OpenLog = OpenLog;
         DontDestroyOnLoad(this.gameObject);
-
-        Manager.Event.Subscribe(1, OnLuaInit);
+        
+        if(AppConst.GameMode == GameLoadMode.Update)
+        {
+            this.AddComponent<HotUpdate>();
+        }
+        else
+        {
+            Manager.Event.Execute((int)GameEvent.GameInit);
+        }
 
     }
-    private void Start()
+    private void GameInit(object args)
     {
-        Manager.Resource.ParseFileText();
+        if(AppConst.GameMode != GameLoadMode.Editor)
+            Manager.Resource.ParseFileText();
         Manager.Lua.InitLua();
     }
-    private void OnLuaInit(object args)
+    private void StartLua(object args)
     {
         Manager.Lua.StartLuaLoad("test");
 
@@ -35,6 +46,7 @@ public class GameStart : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        Manager.Event.Unsubscribe(1, OnLuaInit);
+        Manager.Event.Unsubscribe((int)GameEvent.StartLua, StartLua);
+        Manager.Event.Unsubscribe((int)GameEvent.GameInit, GameInit);
     }
 }

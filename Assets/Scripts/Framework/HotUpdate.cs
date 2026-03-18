@@ -29,6 +29,11 @@ public class HotUpdate : MonoBehaviour
 
     [SerializeField]private int maxRetry = 5;
     [SerializeField] int maxDownloadCount = 5;
+
+    int _DownloadCount;
+
+    GameObject loadingObj;
+    UILoading loadingUI;
     IEnumerator DownloadFile(DownloadFileInfo info, Action<DownloadFileInfo> Complete)
     {
         int retryTime = 0;
@@ -113,6 +118,13 @@ public class HotUpdate : MonoBehaviour
 
     private void Start()
     {
+        GameObject go = Resources.Load<GameObject>("UILoading");
+
+        loadingObj = Instantiate(go);
+        loadingObj.transform.SetParent(transform);
+
+        loadingUI = loadingObj.GetComponentInChildren<UILoading>();
+
         if(IsFirstEnter())
         {
             ReleaseResources();
@@ -133,11 +145,14 @@ public class HotUpdate : MonoBehaviour
     #region 释放资源
     private void ReleaseResources()
     {
+        _DownloadCount = 0;
+
         string url = $"{PathUtil.ReadPath}/{AppConst.FileListName}";
 
         DownloadFileInfo info = new DownloadFileInfo(url, null);
 
         StartCoroutine(DownloadFile(info, OnDownloadReadPathFileComplete));
+
     }
 
     private void OnDownloadReadPathFileComplete(DownloadFileInfo file)
@@ -148,6 +163,8 @@ public class HotUpdate : MonoBehaviour
         List<DownloadFileInfo> fileInfos = GetFileList(file.fileData.text, PathUtil.ReadPath);
         StartCoroutine(DownloadFileList(fileInfos, OnReleaseFileComplete, OnAllReleaseFileComplete));
 
+        loadingUI.InitProgress(fileInfos.Count, "正在释放资源......");
+
     }
     private void OnReleaseFileComplete(DownloadFileInfo file)
     {
@@ -156,6 +173,9 @@ public class HotUpdate : MonoBehaviour
         string writeFile = $"{PathUtil.WritablePath}/{file.fileName}";
 
         FileUtil.WriteFile(writeFile, file.fileData.data);
+
+        _DownloadCount++;
+        loadingUI.UpdateProgress(_DownloadCount);
     }
     private void OnAllReleaseFileComplete()
     {
@@ -176,6 +196,8 @@ public class HotUpdate : MonoBehaviour
     {
         Debug.Log($"{info.url}已下载完成");
 
+        _DownloadCount = 0;
+
         _ServerFileListData = info.fileData.data;
         List<DownloadFileInfo> fileInfos = GetFileList(info.fileData.text, AppConst.ResourceUrl);
         List<DownloadFileInfo> downloadFiles = new List<DownloadFileInfo>();
@@ -193,6 +215,8 @@ public class HotUpdate : MonoBehaviour
         if(downloadFiles.Count > 0)
         {
             StartCoroutine(DownloadFileList(downloadFiles, OnUpdateFileComplete, OnUpdateAllFileComplete));
+
+            loadingUI.InitProgress(downloadFiles.Count, "正在更新资源......");
         }
         else
         {
@@ -205,6 +229,9 @@ public class HotUpdate : MonoBehaviour
 
         string writeFile = $"{PathUtil.WritablePath}/{file.fileName}";
         FileUtil.WriteFile(writeFile, file.fileData.data);
+
+        _DownloadCount++;
+        loadingUI.UpdateProgress(_DownloadCount);
     }
     private void OnUpdateAllFileComplete()
     {
@@ -212,19 +239,13 @@ public class HotUpdate : MonoBehaviour
 
         string writeFile = $"{PathUtil.WritablePath}/{AppConst.FileListName}";
         FileUtil.WriteFile(writeFile, _ServerFileListData);
+        loadingUI.InitProgress(0, "正在载入......");
         EnterGame();
     }
     private void EnterGame()
     {
-        Manager.Resource.ParseFileText();
-        Manager.Resource.LoadUI("UITest", OnComplete);
+        Manager.Event.Execute((int)GameEvent.GameInit);
+        Destroy(loadingObj);
     }
-    private void OnComplete(UnityObject obj)
-    { 
-        GameObject go = Instantiate(obj) as GameObject;
-
-        go.transform.SetParent(this.transform);
-        go.SetActive(true);
-        go.transform.localPosition = Vector3.zero; 
-    }
+  
 }

@@ -69,7 +69,7 @@ public class LuaManager : MonoBehaviour
 
                 if(_LuaScripts.Count >= LuaNames.Count)
                 {
-                    Manager.Event.Execute(1);
+                    Manager.Event.Execute((int)GameEvent.StartLua);
                     LuaNames.Clear();
                     LuaNames = null;
 
@@ -100,7 +100,7 @@ public class LuaManager : MonoBehaviour
 
             AddLuaScript(PathUtil.GetUnityPath(fileName), script);
         }
-        Manager.Event.Execute(1);
+        Manager.Event.Execute((int)GameEvent.StartLua);
     }
     
 #endif
