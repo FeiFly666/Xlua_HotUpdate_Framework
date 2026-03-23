@@ -4,15 +4,22 @@ Vector3 = CS.UnityEngine.Vector3;
 Input = CS.UnityEngine.Input;
 KeyCode = CS.UnityEngine.KeyCode;
 Time = CS.UnityEngine.Time;
+Mathf = CS.UnityEngine.Mathf
+Random = CS.UnityEngine.Random
 
 AppConst = CS.AppConst;
 
 Log = require("log");
 Json = require("rapidjson");
+Enemy = require("Entity.Enemy")
 require("class");
 
 base_msg = require("Message.base_msg");
 msg_mgr = require("Message.msg_mgr");
+
+game_mgr = require("SmallGame.game_mgr")
+
+
 
 local ui_group =
 {
@@ -35,7 +42,7 @@ function Main()
 
     Manager.Net:ConnectedToServer("175.163.9.205", 8000);
     --print("Hello World!");
-    Manager.UI:OpenUI("UITest","UI","UI.UITest");
+    Manager.UI:OpenUI("UIStart","UI","UI.UIStart");
     --Manager.UI:OpenUI("UITest 1","Static","UI.UITest");
     --Manager.Scene:LoadScene("TestScene1","Scene.Scene01");
 end

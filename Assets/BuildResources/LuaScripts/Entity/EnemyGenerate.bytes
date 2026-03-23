@@ -1,0 +1,30 @@
+
+local Info = {}
+
+Info.generateTime = 0.2
+
+Info.lastTime = 0
+
+
+function Awake()
+    
+end
+
+function OnShow()
+    --print("Entity OnShow");
+    self.transform.localPosition = Vector3(-100,0,0)
+end
+
+function Update()
+    --print("Entity update")
+    if Time.time - Info.lastTime > Info.generateTime and game_mgr.isStart then
+        Info.lastTime = Time.time
+        game_mgr.Create_Enemy()
+    end
+
+end
+
+function OnHide()
+    --print("Entity OnHide")
+
+end

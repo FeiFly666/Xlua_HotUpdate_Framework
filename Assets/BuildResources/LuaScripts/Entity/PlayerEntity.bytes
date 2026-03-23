@@ -1,24 +1,60 @@
+---@diagnostic disable: inject-field
+
+local rb = nil
+
 function Awake()
-    print(" Entity init");
+    print(" Entity init")
 end
 
 function OnShow()
     print("Entity OnShow");
-    self.transform.localPosition = Vector3(0,1,0);
+    self.transform.localPosition = Vector3(0,0,0)
+    rb = self:GetComponent("Rigidbody")
 end
 
 function Update()
-    print("Entity update")
-    if(Input.GetKey(KeyCode.W))then
-        self.transform:Translate(self.transform.forward * Time.deltaTime * 10);
+
+    if game_mgr.isStart == false then return end
+    local moveDir = 0
+    local screenWidth = CS.UnityEngine.Screen.width
+    if Input.GetMouseButton(0) then
+        local touchPos = Input.mousePosition
+        if touchPos.x < screenWidth / 2 then
+            moveDir = -1
+        else
+            moveDir = 1
+        end
     end
 
-    if(Input.GetKey(KeyCode.S))then
-        self.transform:Translate(-self.transform.forward * Time.deltaTime * 10);
+    --[[if Input.GetKey(KeyCode.A) then
+        moveDir = -1
+    elseif Input.GetKey(KeyCode.D) then
+        moveDir = 1
+    end]]--
+
+    local speed = 10 
+    if rb then
+            rb.velocity = Vector3(moveDir * speed, rb.velocity.y, rb.velocity.z)
     end
+
+    local pos = self.transform.position
+
+    if pos.x < -10 or pos.x > 10 then
+        pos.x = Mathf.Clamp(pos.x, -10, 10)
+        self.transform.position = pos
+    end
+
 end
 
 function OnHide()
-    print("Entity OnHide");
+    print("Entity OnHide")
 
+end
+
+function OnCollisionEnter(other)
+    if other.gameObject.tag == "Enemy" and game_mgr.isStart then
+        Manager.Event:Execute(100)
+        game_mgr.Game_over()
+        Manager.UI:OpenUI("UIGameOver","UI","UI.UIGameOver");
+    end
 end

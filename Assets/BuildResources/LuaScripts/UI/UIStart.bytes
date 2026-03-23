@@ -1,0 +1,38 @@
+
+local main = require("SmallGame.main")
+
+
+function GetGameName()
+    return main.gameName
+end
+
+function Awake()
+    print("lua awake");
+    
+end
+
+function OnOpen()
+    print("lua open");
+    local gameName = self.transform:Find("GameText"):GetComponent("Text");
+    local StartButton = self.transform:Find("GameStartButton"):GetComponent("Button");
+
+    gameName.text = GetGameName()
+
+    StartButton.onClick:RemoveAllListeners()
+
+    StartButton.onClick:AddListener(
+        function ()
+            main.StartGame()
+            self:OnClose()
+        end
+    )
+    
+end
+
+function OnClose()
+    print("lua close");
+end
+
+function Update()
+    print("lua update");
+end

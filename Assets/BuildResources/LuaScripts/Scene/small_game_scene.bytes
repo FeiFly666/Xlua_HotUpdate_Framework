@@ -1,0 +1,27 @@
+function Awake()
+    print("scene init");
+end
+
+function OnActive()
+    print("Scene OnActive");
+end
+
+function OnEnter()
+    --print("Scene OnEnter Scene01");
+    Manager.Entity:ShowEntity(PathUtil.ModelPath("Player"),"Player", "Entity.PlayerEntity")
+    Manager.Entity:ShowEntity(PathUtil.ModelPath("EnemyGenerate"),"Player", "Entity.EnemyGenerate")
+    --Manager.Scene:ChangeScene("TestScene2","Scene.Scene02");
+    --Manager.Scene:ActiveScene(self.sceneName);
+end
+
+function Update()
+    print("Scene update")
+end
+
+function OnInActive()
+    print("Scene OnInActive");
+end
+
+function OnExit()
+    print("Scene OnExit");
+end

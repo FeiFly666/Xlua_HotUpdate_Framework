@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 3799145857
+CRC: 1910806403
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 8c1ef3cfe54c675cbaf07b4e672ee09c
+    Hash: 51429808dd8403aace52919838a6d3b2
   TypeTreeHash:
     serializedVersion: 2
     Hash: 11cf61b9953da6f64d5d799298fe7789
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 8c1ef3cfe54c675cbaf07b4e672ee09c
+    Hash: 51429808dd8403aace52919838a6d3b2
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -60,5 +60,5 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/BuildResources/UI/Prefab/UILogin.prefab
 Dependencies:
-- D:/unity/xiangmu/HotUpdate/Assets/StreamingAssets/ui/res/login/bigredbutton_regular.png.ab
-- D:/unity/xiangmu/HotUpdate/Assets/StreamingAssets/ui/res/login/tinyroundredbutton.png.ab
+- D:/unity/xiangmu/HotUpdate/Assets/StreamingAssets/res/login/bigredbutton_regular.png.ab
+- D:/unity/xiangmu/HotUpdate/Assets/StreamingAssets/res/login/tinyroundredbutton.png.ab

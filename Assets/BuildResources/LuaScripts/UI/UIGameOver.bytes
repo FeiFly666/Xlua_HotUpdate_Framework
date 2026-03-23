@@ -1,0 +1,40 @@
+
+local main = require("SmallGame.main")
+
+function Awake()
+    print("lua awake");
+    
+end
+
+function OnOpen()
+    print("lua open");
+    local GameExitButton = self.transform:Find("GameExit"):GetComponent("Button");
+
+    local GameReplayButton = self.transform:Find("GameReplay"):GetComponent("Button");
+
+    GameExitButton.onClick:RemoveAllListeners()
+
+    GameReplayButton.onClick:RemoveAllListeners()
+
+    GameExitButton.onClick:AddListener(
+        function ()
+            CS.UnityEngine.Application.Quit()
+        end
+    )
+
+    GameReplayButton.onClick:AddListener(
+        function ()
+            self:OnClose()
+            main.StartGame()
+        end
+    )
+    
+end
+
+function OnClose()
+    print("lua close");
+end
+
+function Update()
+    print("lua update");
+end

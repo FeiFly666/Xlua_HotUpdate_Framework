@@ -1,0 +1,29 @@
+
+function Awake()
+    
+end
+
+function OnShow()
+    --print("Entity OnShow");
+    enemy.OnHideHandler = function (args)
+        self:OnHide()
+    end
+    self.transform.localPosition = enemy.showPosition
+    Manager.Event:Subscribe(100, enemy.OnHideHandler)
+end
+
+function Update()
+    --print("Entity update")
+    self.transform:Translate(-self.transform.up * Time.deltaTime * enemy.speed)
+
+end
+
+function OnHide()
+    Manager.Event:Unsubscribe(100, enemy.OnHideHandler)
+    enemy.OnHideHandler = nil
+    --print("Entity OnHide")
+end
+
+function OnCollisionEnter(other)
+    self:OnHide()
+end

@@ -1,0 +1,42 @@
+
+local game_mgr = {}
+
+local enemySpeed = 5
+
+local generateNum = 0
+
+local totalNum = 0
+
+game_mgr.isStart = false
+
+function game_mgr.Start_game()
+     Manager.Scene:ChangeScene("SmallGame","Scene.small_game_scene");
+     game_mgr.isStart = true
+     enemySpeed = 5
+     generateNum = 0
+     totalNum = 0
+
+end
+
+function game_mgr.Game_over()
+     game_mgr.isStart = false
+end
+
+function game_mgr.Create_Enemy()
+     local enemyPos = Vector3(Random.Range(-10,10),14,0)
+     totalNum = totalNum + 1
+     generateNum = generateNum + 1
+     if generateNum > 10 then
+          generateNum = 0
+          enemySpeed = enemySpeed + 0.5
+     end
+     local go = Manager.Entity:ShowEntity(PathUtil.ModelPath("Enemy"),"Player", "Entity.EnemyEntity",
+          function (entity)
+               entity:SetLuaValue("enemy", Enemy.new(enemySpeed, enemyPos))
+          end
+
+     )
+end
+
+
+return game_mgr

@@ -29,6 +29,7 @@ public static class ExampleConfig
         typeof(Component),
         typeof(Button),
         typeof(Slider),
+        typeof(Rigidbody)
     };
 
     /***************如果你全lua编程，可以参考这份自动化配置***************/

@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 3686770587
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 59ad4882f0777186a66c05fb2c88cdcc
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5ad585dd02dfb5016c0dad519eab8f49
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 59ad4882f0777186a66c05fb2c88cdcc
+HashAppended: 0
+ClassTypes:
+- Class: 49
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/BuildResources/LuaScripts/Scene/small_game_scene.bytes
+Dependencies: []

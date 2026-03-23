@@ -1,0 +1,13 @@
+local Enemy = {}
+Enemy.__index = Enemy
+
+function Enemy.new(speed, showPosition)
+    local self = setmetatable({}, Enemy)
+
+    self.speed = speed or 5
+    self.showPosition = showPosition or Vector3(0, 0, 0)
+
+    return self
+end
+
+return Enemy

@@ -76,4 +76,9 @@
 		
 	</assembly>
 
+	<assembly fullname="UnityEngine.PhysicsModule">
+	    <type fullname="UnityEngine.Rigidbody" preserve="all"/>
+		
+	</assembly>
+
 </linker>

@@ -1,0 +1,10 @@
+
+local main = {};
+main.__index = main;
+main.gameName = "躲避方块"
+
+function main.StartGame()
+    game_mgr.Start_game()
+end
+
+return main;

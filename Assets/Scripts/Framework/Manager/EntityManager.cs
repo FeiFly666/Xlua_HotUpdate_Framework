@@ -36,15 +36,18 @@ public class EntityManager : MonoBehaviour
         return null;
     }
 
-    public void ShowEntity(string name, string groupName, string luaName)
+    public void ShowEntity(string name, string groupName, string luaName, System.Action<EntityLogic> onComplete = null)
     {
         GameObject entity = null;
-        if(_Entities.TryGetValue(name, out entity))
+/*        if(_Entities.TryGetValue(name, out entity))
         {
             EntityLogic entityLogic = entity.GetComponent<EntityLogic>();
+
+            onComplete?.Invoke(entityLogic);
+
             entityLogic.OnShow();
             return;
-        }
+        }*/
 
         Manager.Resource.LoadPrefab(name, (Object) =>
         {
@@ -53,10 +56,14 @@ public class EntityManager : MonoBehaviour
             Transform group = GetEntityGroup(groupName);
             entity.transform.SetParent(group, false);
 
-            _Entities.Add(name, entity);
+            //_Entities.Add(name, entity);
 
             EntityLogic logic = entity.AddComponent<EntityLogic>();
+
             logic.Init(luaName);
+
+            onComplete?.Invoke(logic);
+
             logic.OnShow();
         });
     }

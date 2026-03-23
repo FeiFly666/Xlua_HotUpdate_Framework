@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 1611165120
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a0ab2ba44bd37d234f6af14c8f5476c7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2d8df09e698f722ada1caa03d3413830
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: a0ab2ba44bd37d234f6af14c8f5476c7
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/BuildResources/Res/Login/bg.jpg
+Dependencies: []
